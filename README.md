@@ -36,8 +36,10 @@ scheduler = OneCycleLR(optimizer, max_lr=0.1, total_steps=100)
 
 #In your training loop
 for step in range(100):
+
     # Forward pass, loss computation, backward pass...
     optimizer.step()
+
     # Update the learning rate
     progress = step / 100 # Calculate the current progress
     scheduler.step(progress)
