@@ -143,7 +143,7 @@ class OneCycleLR(ProgressiveScheduler):
             ValueError: If training_progress is not between 0.0 and 1.0.
         """
         if training_progress < 0.0 or training_progress > 1.0:
-            raise ValueError("training_progress should be between 0.0 and 1.0")
+            raise ValueError("training_progress must be between 0.0 and 1.0.")
 
         if training_progress < self.pct_start:
             warmup_pct = training_progress / self.pct_start
