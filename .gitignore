@@ -1,0 +1,9 @@
+
+.DS_Store
+.vscode
+__pycache__
+*.egg-info
+
+# For support of https://github.com/TrelisResearch/flatten
+repo_structure.yaml
+flattened_repo.txt
