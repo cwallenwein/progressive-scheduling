@@ -19,11 +19,17 @@ pip install git+https://github.com/cwallenwein/progressive-scheduling.git
 
 ## Quick Start
 
-Here's a simple example of how to use the OneCycleLR scheduler:
-```python
+Switching to **progressive_scheduling** requires only minimal changes to your existing code
+
+1. Import the scheduler from progressive_scheduling instead of torch.optim.lr_scheduler.
+2. Remove the total_steps parameter (or T_max, depending on the scheduler) when initializing the scheduler.
+3. Pass the current progress (as float between 0 and 1) to scheduler.step()
+
+```diff
 import torch
 from torch.optim import SGD
-from progressive_scheduling import OneCycleLR
+- from torch.optim.lr_scheduler import OneCycleLR
++ from progressive_scheduling import OneCycleLR
 
 # Create your model
 model = YourModel()
@@ -32,11 +38,8 @@ model = YourModel()
 optimizer = SGD(model.parameters(), lr=0.1)
 
 # Create a scheduler
-# Original code
-# from torch.optim import lr_scheduler
-# scheduler = lr_scheduler.OneCycleLR(optimizer, max_lr=0.1, total_steps=100)
-# Updated code
-scheduler = OneCycleLR(optimizer, max_lr=0.1)
+- scheduler = OneCycleLR(optimizer, max_lr=0.1, total_steps=100)
++ scheduler = OneCycleLR(optimizer, max_lr=0.1)
 
 
 #In your training loop
@@ -46,8 +49,9 @@ for step in range(100):
     optimizer.step()
 
     # Update the learning rate
-    progress = step / 100 # Calculate the current progress
-    scheduler.step(progress)
+-   scheduler.step()
++   progress = step / 100 # Calculate the current progress
++   scheduler.step(progress)
 ```
 
 ## Documentation
@@ -98,5 +102,4 @@ lr_scheduler.ReduceLROnPlateau
 lr_scheduler.CyclicLR
 lr_scheduler.OneCycleLR
 lr_scheduler.CosineAnnealingWarmRestarts
-
 --->
