@@ -1,6 +1,6 @@
 # Progressive Scheduling
 
-progressive_scheduling is a PyTorch-compatible library that provides learning rate schedulers based on training progress rather than steps. This is useful in scenarios where it is hard to estimate the total number of steps before starting the training (e.g. when training for a specific duration in seconds like https://arxiv.org/pdf/2212.14034).
+**progressive_scheduling** is a PyTorch-compatible library that provides learning rate schedulers based on training progress rather than steps. This is useful when it's hard to estimate the total number of steps before starting the training (e.g. when training for exactly 24 hours, like https://arxiv.org/pdf/2212.14034).
 
 ## Features
 
@@ -8,7 +8,7 @@ progressive_scheduling is a PyTorch-compatible library that provides learning ra
 - Compatible with PyTorch optimizers
 - Currently supports:
   - CosineAnnealingLR
-  - OneCycleLR (only suppports three_phase=False)
+  - OneCycleLR (only three_phase=False)
 
 ## Installation
 
@@ -25,14 +25,19 @@ import torch
 from torch.optim import SGD
 from progressive_scheduling import OneCycleLR
 
-#Create your model
+# Create your model
 model = YourModel()
 
-#Create an optimizer
+# Create an optimizer
 optimizer = SGD(model.parameters(), lr=0.1)
 
-#Create a scheduler
-scheduler = OneCycleLR(optimizer, max_lr=0.1, total_steps=100)
+# Create a scheduler
+# Original code
+# from torch.optim import lr_scheduler
+# scheduler = lr_scheduler.OneCycleLR(optimizer, max_lr=0.1, total_steps=100)
+# Updated code
+scheduler = OneCycleLR(optimizer, max_lr=0.1)
+
 
 #In your training loop
 for step in range(100):
