@@ -24,12 +24,16 @@ Here's a simple example of how to use the OneCycleLR scheduler:
 import torch
 from torch.optim import SGD
 from progressive_scheduling import OneCycleLR
+
 #Create your model
 model = YourModel()
+
 #Create an optimizer
 optimizer = SGD(model.parameters(), lr=0.1)
+
 #Create a scheduler
 scheduler = OneCycleLR(optimizer, max_lr=0.1, total_steps=100)
+
 #In your training loop
 for step in range(100):
     # Forward pass, loss computation, backward pass...
