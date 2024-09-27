@@ -15,6 +15,7 @@ class AutoSchedulingCallback(pl.callbacks.Callback):
             assert max_time_in_min is None
             self.max_steps = max_steps
             self.on_train_batch_end = self.on_train_batch_end_max_steps
+            self.once_outside_threshold = False
 
     def on_train_start(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
         self.training_start = time.time()
@@ -30,6 +31,16 @@ class AutoSchedulingCallback(pl.callbacks.Callback):
     ):
         current_training_duration = time.time() - self.training_start
         training_progress = current_training_duration / self.total_training_duration
+        if training_progress > 1:
+            if self.once_outside_threshold:
+                raise (
+                    "training_progress must be between 0.0 and 1.0 but it's",
+                    training_progress,
+                )
+            else:
+                self.once_outside_threshold = True
+                training_progress = 1.0
+
         self.scheduler.step(training_progress)
 
     def on_train_batch_end_max_steps(
