@@ -1,6 +1,6 @@
 # Progressive Scheduling
 
-progressive_scheduling is a PyTorch-compatible library that provides learning rate schedulers based on training progress rather than steps. This is useful in scenarios where it is hard to estimate the total number of steps before starting the training (e.g. when training for a specific duration in seconds).
+progressive_scheduling is a PyTorch-compatible library that provides learning rate schedulers based on training progress rather than steps. This is useful in scenarios where it is hard to estimate the total number of steps before starting the training (e.g. when training for a specific duration in seconds like https://arxiv.org/pdf/2212.14034).
 
 ## Features
 
