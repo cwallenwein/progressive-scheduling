@@ -11,11 +11,11 @@ class AutoSchedulingCallback(pl.callbacks.Callback):
             assert max_time_in_min is not None
             self.total_training_duration = max_time_in_min * 60
             self.on_train_batch_end = self.on_train_batch_end_max_time
+            self.once_outside_threshold = False
         else:
             assert max_time_in_min is None
             self.max_steps = max_steps
             self.on_train_batch_end = self.on_train_batch_end_max_steps
-            self.once_outside_threshold = False
 
     def on_train_start(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
         self.training_start = time.time()
