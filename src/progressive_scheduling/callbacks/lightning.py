@@ -6,14 +6,14 @@ from lightning.pytorch.utilities.types import STEP_OUTPUT
 
 
 class AutoSchedulingCallback(pl.callbacks.Callback):
-    def __init__(self, max_steps: int = -1, max_time_in_min: int = None):
+    def __init__(self, max_steps: int = -1, max_time_in_sec: int = None):
         if max_steps == -1:
-            assert max_time_in_min is not None
-            self.total_training_duration = max_time_in_min * 60
+            assert max_time_in_sec is not None
+            self.total_training_duration = max_time_in_sec
             self.on_train_batch_end = self.on_train_batch_end_max_time
             self.once_outside_threshold = False
         else:
-            assert max_time_in_min is None
+            assert max_time_in_sec is None
             self.max_steps = max_steps
             self.on_train_batch_end = self.on_train_batch_end_max_steps
 
